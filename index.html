@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Portal Acadêmico — Verificação de Diplomas</title>
 
-  <!-- QR CODE LIB -->
   <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 
   <style>
@@ -28,26 +27,103 @@
       color: var(--text);
     }
 
+    /* Top bar */
     .topbar {
       background: #111827;
       color: #fff;
-      text-align: center;
       font-size: 13px;
-      padding: 8px;
+      padding: 6px 20px;
     }
 
+    .topbar-links {
+      max-width: 1100px;
+      margin: auto;
+      display: flex;
+      gap: 16px;
+    }
+
+    .topbar-links a {
+      color: #fff;
+      text-decoration: none;
+      opacity: .85;
+    }
+
+    /* Header */
     header {
       background: #fff;
       border-bottom: 1px solid var(--border);
-      padding: 18px;
-      text-align: center;
     }
 
-    .brand {
-      font-weight: 700;
+    .header-inner {
+      max-width: 1100px;
+      margin: auto;
+      padding: 18px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .logo-area {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: 800;
       color: var(--primary);
     }
 
+    .institution {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .menu {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .menu a {
+      text-decoration: none;
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    /* Banner */
+    .banner {
+      background: linear-gradient(90deg, #003399, #001f66);
+      color: #fff;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .banner h2 {
+      margin: 0;
+      font-size: 28px;
+    }
+
+    .banner-actions {
+      margin-top: 20px;
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .banner-actions button {
+      background: #FFD700;
+      border: none;
+      padding: 10px 14px;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* Container */
     .container {
       max-width: 900px;
       margin: 40px auto;
@@ -59,7 +135,6 @@
       border: 1px solid var(--border);
       border-radius: 10px;
       box-shadow: 0 10px 25px rgba(0,0,0,.05);
-      overflow: hidden;
     }
 
     .panel-header {
@@ -139,49 +214,29 @@
       border-radius: 6px;
     }
 
-    .actions {
-      margin-top: 20px;
-    }
-
     #qrcode {
       margin-top: 20px;
     }
 
-    .protocol {
-      margin-top: 10px;
-      font-size: 13px;
-      color: var(--muted);
+    .actions {
+      margin-top: 20px;
     }
 
     /* PRINT */
     @media print {
-
-      body {
-        background: #fff;
-      }
-
       .topbar,
       header,
+      .banner,
       .search,
-      .actions,
       .panel-header,
-      .loader {
+      .loader,
+      button {
         display: none !important;
       }
 
       .panel {
         border: 2px solid #000;
         box-shadow: none;
-      }
-
-      .simulation {
-        border-left: 4px solid #000;
-        background: #fff;
-        color: #000;
-      }
-
-      #qrcode {
-        margin-top: 20px;
       }
     }
   </style>
@@ -190,12 +245,44 @@
 <body>
 
 <div class="topbar">
-  AMBIENTE DE DEMONSTRAÇÃO — SISTEMA NÃO OFICIAL
+  <div class="topbar-links">
+    <a href="#">Acessibilidade</a>
+    <a href="#">Fale Conosco</a>
+    <a href="#">Links Rápidos</a>
+  </div>
 </div>
 
 <header>
-  <div class="brand">Universidade Paulista — Verificação de Diplomas</div>
+  <div class="header-inner">
+
+    <div class="logo-area">
+      <div class="logo">UNIP</div>
+      <div class="institution">Universidade Paulista</div>
+    </div>
+
+    <nav class="menu">
+      <a href="#">Universidade</a>
+      <a href="#">Medicina</a>
+      <a href="#">Vestibular</a>
+      <a href="#">Cursos</a>
+      <a href="#">Pesquisas</a>
+      <a href="#">Serviços</a>
+    </nav>
+
+  </div>
 </header>
+
+<div class="banner">
+  <h2>Faça EAD na UNIP!</h2>
+  <p>Venha estudar na Universidade Paulista</p>
+
+  <div class="banner-actions">
+    <button>Vestibular</button>
+    <button>On-line</button>
+    <button>Use a nota do ENEM</button>
+    <button>Transferência</button>
+  </div>
+</div>
 
 <div class="container">
   <div class="panel">
@@ -209,52 +296,23 @@
         <button id="btn">Consultar</button>
       </div>
 
-      <div id="loader" class="loader">Consultando...</div>
+      <div id="loader" class="loader">Consultando base acadêmica...</div>
 
       <div id="resultado" style="display:none; margin-top:20px;">
 
         <div class="status">● Diploma Ativo</div>
 
-        <div class="field">
-          <div class="label">Nome</div>
-          <div class="value" id="name"></div>
-        </div>
-
-        <div class="field">
-          <div class="label">Curso</div>
-          <div class="value" id="degree"></div>
-        </div>
-
-        <div class="field">
-          <div class="label">Instituição</div>
-          <div class="value" id="inst"></div>
-        </div>
-
-        <div class="field">
-          <div class="label">Conclusão</div>
-          <div class="value" id="date"></div>
-        </div>
-
-        <div class="field">
-          <div class="label">Registro</div>
-          <div class="value" id="dnum"></div>
-        </div>
-
-        <div class="field">
-          <div class="label">Protocolo</div>
-          <div class="value" id="protocol"></div>
-        </div>
-
-        <div class="field">
-          <div class="label">Data da Consulta</div>
-          <div class="value" id="datetime"></div>
-        </div>
+        <div class="field"><div class="label">Nome</div><div class="value" id="name"></div></div>
+        <div class="field"><div class="label">CPF</div><div class="value" id="cpf"></div></div>
+        <div class="field"><div class="label">Curso</div><div class="value" id="degree"></div></div>
+        <div class="field"><div class="label">Instituição</div><div class="value" id="inst"></div></div>
+        <div class="field"><div class="label">Polo</div><div class="value" id="polo"></div></div>
+        <div class="field"><div class="label">Conclusão</div><div class="value" id="date"></div></div>
+        <div class="field"><div class="label">Registro</div><div class="value" id="dnum"></div></div>
+        <div class="field"><div class="label">Protocolo</div><div class="value" id="protocol"></div></div>
+        <div class="field"><div class="label">Data da Consulta</div><div class="value" id="datetime"></div></div>
 
         <div id="qrcode"></div>
-
-        <div class="protocol">
-          QR Code vinculado ao protocolo de verificação.
-        </div>
 
         <div class="simulation">
           ⚠️ Sistema de demonstração. Não possui vínculo oficial com a instituição.
@@ -271,60 +329,64 @@
 </div>
 
 <script>
-  const records = {
-    '13407623-22': {
-      diploma: '13407623-22',
-      name: 'Edson de Lima Irala',
-      degree: 'Bacharel em Psicologia',
-      inst: 'Universidade Paulista (UNIP)',
-      date: 'Conclusão em 13/08/2019'
-    }
-  };
-
-  function gerarProtocolo() {
-    return 'PROT-' + Date.now() + '-' + Math.floor(Math.random() * 1000);
+const records = {
+  '13407623-22': {
+    diploma: '13407623-22',
+    name: 'Edson de Lima Irala',
+    cpf: '123.456.789-00',
+    degree: 'Bacharel em Psicologia',
+    inst: 'Universidade Paulista (UNIP)',
+    polo: 'Polo São Paulo - Centro',
+    date: 'Conclusão em 13/08/2019'
   }
+};
 
-  document.getElementById('btn').addEventListener('click', () => {
-    const q = document.getElementById('q').value.trim();
-    const r = records[q];
+function gerarProtocoloHash() {
+  return 'PROT-' + Math.random().toString(36).substring(2, 10) + '-' + Date.now();
+}
 
-    const loader = document.getElementById('loader');
-    const resultado = document.getElementById('resultado');
+document.getElementById('btn').addEventListener('click', () => {
 
-    resultado.style.display = 'none';
-    loader.style.display = 'block';
+  const q = document.getElementById('q').value.trim();
+  const r = records[q];
 
-    setTimeout(() => {
-      loader.style.display = 'none';
+  const loader = document.getElementById('loader');
+  const resultado = document.getElementById('resultado');
 
-      if (r) {
-        const protocolo = gerarProtocolo();
-        const agora = new Date().toLocaleString('pt-BR');
+  resultado.style.display = 'none';
+  loader.style.display = 'block';
 
-        document.getElementById('name').innerText = r.name;
-        document.getElementById('degree').innerText = r.degree;
-        document.getElementById('inst').innerText = r.inst;
-        document.getElementById('date').innerText = r.date;
-        document.getElementById('dnum').innerText = r.diploma;
+  setTimeout(() => {
+    loader.style.display = 'none';
 
-        document.getElementById('protocol').innerText = protocolo;
-        document.getElementById('datetime').innerText = agora;
+    if (r) {
 
-        // QR Code
-        document.getElementById('qrcode').innerHTML = '';
-        new QRCode(document.getElementById("qrcode"), {
-          text: protocolo,
-          width: 120,
-          height: 120
-        });
+      const protocolo = gerarProtocoloHash();
+      const agora = new Date().toLocaleString('pt-BR');
 
-        resultado.style.display = 'block';
-      } else {
-        alert('Registro não encontrado.');
-      }
-    }, 1200);
-  });
+      document.getElementById('name').innerText = r.name;
+      document.getElementById('cpf').innerText = r.cpf;
+      document.getElementById('degree').innerText = r.degree;
+      document.getElementById('inst').innerText = r.inst;
+      document.getElementById('polo').innerText = r.polo;
+      document.getElementById('date').innerText = r.date;
+      document.getElementById('dnum').innerText = r.diploma;
+      document.getElementById('protocol').innerText = protocolo;
+      document.getElementById('datetime').innerText = agora;
+
+      document.getElementById('qrcode').innerHTML = '';
+      new QRCode(document.getElementById("qrcode"), {
+        text: protocolo,
+        width: 120,
+        height: 120
+      });
+
+      resultado.style.display = 'block';
+    } else {
+      alert('Registro não encontrado.');
+    }
+  }, 1200);
+});
 </script>
 
 </body>
