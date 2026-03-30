@@ -27,7 +27,6 @@
       color: var(--text);
     }
 
-    /* Top bar */
     .topbar {
       background: #111827;
       color: #fff;
@@ -48,7 +47,6 @@
       opacity: .85;
     }
 
-    /* Header */
     header {
       background: #fff;
       border-bottom: 1px solid var(--border);
@@ -93,7 +91,6 @@
       font-size: 14px;
     }
 
-    /* Banner */
     .banner {
       background: linear-gradient(90deg, #003399, #001f66);
       color: #fff;
@@ -121,9 +118,9 @@
       border-radius: 6px;
       font-weight: 600;
       cursor: pointer;
+      color: #111827;
     }
 
-    /* Container */
     .container {
       max-width: 900px;
       margin: 40px auto;
@@ -204,16 +201,6 @@
       font-weight: 600;
     }
 
-    .simulation {
-      margin-top: 20px;
-      padding: 12px;
-      border-left: 4px solid var(--warning);
-      background: #fffbeb;
-      color: #92400e;
-      font-size: 13px;
-      border-radius: 6px;
-    }
-
     #qrcode {
       margin-top: 20px;
     }
@@ -222,7 +209,6 @@
       margin-top: 20px;
     }
 
-    /* PRINT */
     @media print {
       .topbar,
       header,
@@ -254,7 +240,6 @@
 
 <header>
   <div class="header-inner">
-
     <div class="logo-area">
       <div class="logo">UNIP</div>
       <div class="institution">Universidade Paulista</div>
@@ -262,13 +247,12 @@
 
     <nav class="menu">
       <a href="#">Universidade</a>
-      <a href="#">Medicina</a>
+      <a href="#">Engenharia</a>
       <a href="#">Vestibular</a>
       <a href="#">Cursos</a>
       <a href="#">Pesquisas</a>
       <a href="#">Serviços</a>
     </nav>
-
   </div>
 </header>
 
@@ -286,11 +270,9 @@
 
 <div class="container">
   <div class="panel">
-
     <div class="panel-header">Consulta de Diploma</div>
 
     <div class="panel-body">
-
       <div class="search">
         <input id="q" placeholder="Digite o número do diploma" />
         <button id="btn">Consultar</button>
@@ -299,7 +281,6 @@
       <div id="loader" class="loader">Consultando base acadêmica...</div>
 
       <div id="resultado" style="display:none; margin-top:20px;">
-
         <div class="status">● Diploma Ativo</div>
 
         <div class="field"><div class="label">Nome</div><div class="value" id="name"></div></div>
@@ -317,23 +298,21 @@
         <div class="actions">
           <button onclick="window.print()">Imprimir</button>
         </div>
-
       </div>
-
     </div>
   </div>
 </div>
 
 <script>
 const records = {
-  '13407623-22': {
-    diploma: '13407623-22',
-    name: 'Edson de Lima Irala',
+  '356643-22': {
+    diploma: '356643-22',
+    name: 'Ramon de Carvalho Conceição',
     cpf: '123.456.789-00',
-    degree: 'Bacharel em Psicologia',
-    inst: 'Universidade Paulista (UNIP)',
+    degree: 'Bacharel em Engenharia Elétrica',
+    inst: 'Universidade Paulista - UNIP',
     polo: 'Polo São Paulo - Centro',
-    date: 'Conclusão em 13/08/2019'
+    date: 'Conclusão em 24/08/2025'
   }
 };
 
@@ -342,7 +321,6 @@ function gerarProtocoloHash() {
 }
 
 document.getElementById('btn').addEventListener('click', () => {
-
   const q = document.getElementById('q').value.trim();
   const r = records[q];
 
@@ -356,7 +334,6 @@ document.getElementById('btn').addEventListener('click', () => {
     loader.style.display = 'none';
 
     if (r) {
-
       const protocolo = gerarProtocoloHash();
       const agora = new Date().toLocaleString('pt-BR');
 
